@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class EnviroManager : MonoBehaviour
 {
-    // //[SerializeField] GameObject m_map;
-    //[SerializeField] float m_speed;
-    //Rigidbody2D m_rb2D;
+    public static EnviroManager instance;
+
+    [SerializeField] GameObject m_map;
+    [SerializeField] float m_speed;
+    Rigidbody2D m_rb2D;
     public GameObject Enemy;
 
     [SerializeField] Transform m_leftSpawnPosition;
@@ -15,12 +17,24 @@ public class EnviroManager : MonoBehaviour
 
     [SerializeField] EnvironmentState m_currentState;
 
-    //void Start()
-    //{
-    //    changeEnvironmentManagerState(EnvironmentState.Game);
-    //}
+    void Start()
+    {
+        changeEnvironmentManagerState(EnvironmentState.Game);
 
-    void changeEnvironmentManagerState(EnvironmentState p_newState)
+    }
+    public void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(instance);
+        }
+    }
+
+    public void changeEnvironmentManagerState(EnvironmentState p_newState)
     {
         if (p_newState == m_currentState)
         {
@@ -45,12 +59,24 @@ public class EnviroManager : MonoBehaviour
 
     void game()
     {
-        Instantiate(Enemy, m_rightSpawnPosition.position, Quaternion.identity);
+
+        if (Instantiate(Enemy, m_rightSpawnPosition.position, Quaternion.identity))
+        {
+
+        }
+        if (Instantiate(Enemy, m_leftSpawnPosition.position, Quaternion.identity))
+        {
+
+        }
+        if (Instantiate(Enemy, m_UpSpawnPosition.position, Quaternion.identity))
+        {
+
+        }
+        return;
     }
 
     void gameOver()
     {
-
     }
 
 }

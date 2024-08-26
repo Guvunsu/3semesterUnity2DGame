@@ -52,10 +52,11 @@ public class UIManager : MonoBehaviour
     }
 
     IEnumerator TimeToTurnOffSign(int p_newSign)
-    {
+    {// cuando tengamos activatodo el activatenewsign le podemos poner que spawne los enemigos cada cierto segundos 
         yield return new WaitForSeconds(3);
         m_listOfSign[p_newSign].SetActive(false);
         changeUIManagerState(UIState.DesactivateSign);
+        EnviroManager.instance.ToString();
     }
 }
 
