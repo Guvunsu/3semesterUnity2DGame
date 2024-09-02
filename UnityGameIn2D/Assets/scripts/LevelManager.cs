@@ -51,7 +51,7 @@ public class LevelManager : MonoBehaviour
     {
         int temp_newValue = Random.Range(0, 2);
 
-        UIManager.instance.activateNewSign(temp_newValue);
+        UIManager.instance.setNewRandomPosition(temp_newValue);
         UIManager.instance.changeUIManagerState(UIState.ActivateNewSign);
     }
 }
