@@ -60,6 +60,8 @@ public class EnviroManager : MonoBehaviour
             case EnvironmentState.None:
                 break;
             case EnvironmentState.ReadyToSpawnEnemy:
+                break;
+            case EnvironmentState.CreateEnemy:
                 createEnemy();
                 break;
             case EnvironmentState.GameOver:
@@ -85,21 +87,23 @@ public class EnviroManager : MonoBehaviour
     /// </summary>
     void createEnemy()
     {
-
-        if (Instantiate(Enemy, m_rightSpawnPosition.position, Quaternion.identity))
-        {
-            changeEnvironmentManagerState(EnvironmentState.ReadyToSpawnEnemy);
-            LevelManager.instance.changeLevelManagerState(LevelManagerState.CreateNewEnemy);
-            if (Instantiate(Enemy, m_leftSpawnPosition.position, Quaternion.identity))
-            {
-                changeEnvironmentManagerState(EnvironmentState.ReadyToSpawnEnemy);
-            }
-            if (Instantiate(Enemy, m_UpSpawnPosition.position, Quaternion.identity))
-            {
-                changeEnvironmentManagerState(EnvironmentState.ReadyToSpawnEnemy);
-            }
-            return;
-        }
+        Instantiate(Enemy, m_rightSpawnPosition.position, Quaternion.identity);
+        //if (null) 
+        //{
+        //    changeEnvironmentManagerState(EnvironmentState.ReadyToSpawnEnemy);
+        //    LevelManager.instance.changeLevelManagerState(LevelManagerState.CreateNewEnemy);
+        //    if (Instantiate(Enemy, m_leftSpawnPosition.position, Quaternion.identity))
+        //    {
+        //        LevelManager.instance.changeLevelManagerState(LevelManagerState.CreateNewEnemy);
+        //        changeEnvironmentManagerState(EnvironmentState.ReadyToSpawnEnemy);
+        //    }
+        //    if (Instantiate(Enemy, m_UpSpawnPosition.position, Quaternion.identity))
+        //    {
+        //        LevelManager.instance.changeLevelManagerState(LevelManagerState.CreateNewEnemy);
+        //        changeEnvironmentManagerState(EnvironmentState.ReadyToSpawnEnemy);
+        //    }
+        //    return;
+        //}
         /// <summary>
         /// 
         /// </summary>
@@ -117,5 +121,6 @@ public enum EnvironmentState
 {
     None,
     ReadyToSpawnEnemy,
+    CreateEnemy,
     GameOver
 }

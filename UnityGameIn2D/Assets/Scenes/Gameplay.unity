@@ -169,11 +169,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_map: {fileID: 2011089692}
   m_speed: 1.16
-  Enemy: {fileID: 6376810444918739158, guid: 9f505b7d5b9460b4fb4193b70fafd16a, type: 3}
   m_leftSpawnPosition: {fileID: 983271267}
   m_rightSpawnPosition: {fileID: 347415280}
   m_UpSpawnPosition: {fileID: 1526173270}
   m_currentState: 1
+  Enemy: {fileID: 6376810444918739158, guid: 9f505b7d5b9460b4fb4193b70fafd16a, type: 3}
 --- !u!1 &347415279
 GameObject:
   m_ObjectHideFlags: 0
@@ -683,6 +683,7 @@ MonoBehaviour:
   - {fileID: 347541836}
   - {fileID: 1145578069}
   - {fileID: 1834964163}
+  m_ArrayOfSign: []
 --- !u!4 &1230132672
 Transform:
   m_ObjectHideFlags: 0
@@ -1150,7 +1151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_jump: 5
-  m_movement: 3
+  m_movement: 5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
