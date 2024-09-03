@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnviroManager : MonoBehaviour {
+public class EnviroManager : MonoBehaviour
+{
     #region Variables 
+    public static EnviroManager Instance;
     // mi intancia 
     public static EnviroManager instance;
 
@@ -20,14 +22,20 @@ public class EnviroManager : MonoBehaviour {
     #endregion
 
     #region Funciones Publicas
-    void Start() {
-        changeEnvironmentManagerState(EnvironmentState.Game);
+    void Start()
+    {
+
+        changeEnvironmentManagerState(EnvironmentState.ReadyToSpawnEnemy);
 
     }
-    public void Awake() {
-        if (instance == null) {
+    public void Awake()
+    {
+        if (instance == null)
+        {
             instance = this;
-        } else {
+        }
+        else
+        {
             Destroy(instance);
         }
     }
@@ -38,18 +46,21 @@ public class EnviroManager : MonoBehaviour {
     /// se ejecutara todo lo de esa funcion y psara all siguient evento si uno muere se ejecuta funcion gameOver() y se rompe(termina)
     /// </summary>
     /// <param name="p_newState"></param>
-    public void changeEnvironmentManagerState(EnvironmentState p_newState) {
-        if (p_newState == m_currentState) {
+    public void changeEnvironmentManagerState(EnvironmentState p_newState)
+    {
+        if (p_newState == m_currentState)
+        {
             return;
         }
 
         m_currentState = p_newState;
 
-        switch (m_currentState) {
+        switch (m_currentState)
+        {
             case EnvironmentState.None:
                 break;
-            case EnvironmentState.Game:
-                game();
+            case EnvironmentState.ReadyToSpawnEnemy:
+                createEnemy();
                 break;
             case EnvironmentState.GameOver:
                 gameOver();
@@ -57,14 +68,14 @@ public class EnviroManager : MonoBehaviour {
         }
 
     }
-    /// <summary>
-    /// mi lista de mi maquina de esatdo llamado EnvironmentState para mis esatdos dentro del gameplay
-    /// </summary>
-    public enum EnvironmentState {
-        None,
-        Game,
-        GameOver
+
+    public EnvironmentState getEnviromentState()
+    {
+        return m_currentState;
     }
+
+
+
     #endregion
 
     #region Funciones Privadas 
@@ -72,24 +83,39 @@ public class EnviroManager : MonoBehaviour {
     /// <summary>
     /// Hardcodereo mi codigo con ifs para que instancie señal arrastrando mis gameObjects vacios que posiblemente tendran aleatoriamente hasta mi herachy  
     /// </summary>
-    void game() {
+    void createEnemy()
+    {
 
-        if (Instantiate(Enemy, m_rightSpawnPosition.position, Quaternion.identity)) {
-
+        if (Instantiate(Enemy, m_rightSpawnPosition.position, Quaternion.identity))
+        {
+            changeEnvironmentManagerState(EnvironmentState.ReadyToSpawnEnemy);
+            LevelManager.instance.changeLevelManagerState(LevelManagerState.CreateNewEnemy);
+            if (Instantiate(Enemy, m_leftSpawnPosition.position, Quaternion.identity))
+            {
+                changeEnvironmentManagerState(EnvironmentState.ReadyToSpawnEnemy);
+            }
+            if (Instantiate(Enemy, m_UpSpawnPosition.position, Quaternion.identity))
+            {
+                changeEnvironmentManagerState(EnvironmentState.ReadyToSpawnEnemy);
+            }
+            return;
         }
-        if (Instantiate(Enemy, m_leftSpawnPosition.position, Quaternion.identity)) {
-
-        }
-        if (Instantiate(Enemy, m_UpSpawnPosition.position, Quaternion.identity)) {
-
-        }
-        return;
+        /// <summary>
+        /// 
+        /// </summary>
+        #endregion
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    void gameOver() {
+    void gameOver()
+    {
     }
-    #endregion
 }
 
+/// <summary>
+/// mi lista de mi maquina de esatdo llamado EnvironmentState para mis esatdos dentro del gameplay
+/// </summary>
+public enum EnvironmentState
+{
+    None,
+    ReadyToSpawnEnemy,
+    GameOver
+}
