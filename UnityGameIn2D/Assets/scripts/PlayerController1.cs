@@ -34,7 +34,13 @@ public class PlayerController1 : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    /// <summary>
+    /// en mi funcion tipo privada de la clase OnCollisionEnter2D
+    /// si mi Collision2D que esta sujeto a un gameObject toque y aaceda al tag Floor, estas en el suelo por el booleano
+    /// misma historia con el tag Enemy pero este destruye el GAMEOBJECT que es sujeto a este 
+    /// </summary>
+    /// <param name="collision"></param>
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Floor"))
         {
@@ -46,8 +52,12 @@ public class PlayerController1 : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    private void OnCollisionExit2D(Collision2D collision)
+    /// <summary>
+    /// llamo esta fucnion privada para hacerle saber que al boleano que se referencia en que verdaderamente estoy en el suelo
+    /// le hago saber que estoy fuera de esta colision, osea NO estoy e el suelo y ando "flotando,en el aire o en otro tag" 
+    /// </summary>
+    /// <param name="collision"></param>
+    void OnCollisionExit2D(Collision2D collision)
     {
         m_inFloor = false;
     }
