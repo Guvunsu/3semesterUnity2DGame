@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
-{
-    /// <summary>
-    /// Esta es la instancia del UIManager
-    /// </summary>
+public class UIManager : MonoBehaviour {
+    #region Variables
+    //Esta es la instancia del UIManager
     public static UIManager instance;
 
     [SerializeField] List<GameObject> m_listOfSign;
@@ -14,6 +12,8 @@ public class UIManager : MonoBehaviour
     UIState m_currentState;
 
     int m_newPosition;
+
+    #endregion
 
     #region Funciones Publicas
 
@@ -25,17 +25,14 @@ public class UIManager : MonoBehaviour
     /// </summary>
     /// <param name="p_newState"></param>
 
-    public void changeUIManagerState(UIState p_newState)
-    {
-        if (p_newState == m_currentState)
-        {
+    public void changeUIManagerState(UIState p_newState) {
+        if (p_newState == m_currentState) {
             return;
         }
 
         m_currentState = p_newState;
-        
-        switch (m_currentState)
-        {
+
+        switch (m_currentState) {
             case UIState.None:
                 break;
             case UIState.ActivateNewSign:
@@ -52,25 +49,27 @@ public class UIManager : MonoBehaviour
     /// para asignar uno de nuestras opciones numeradas poscisionadas (3)
     /// </summary>
     /// <param name="p_newSign"></param>
-    public void setNewRandomPosition(int p_newSign)
-    {
+    public void setNewRandomPosition(int p_newSign) {
         m_newPosition = p_newSign;
     }
+    /// <summary>
+    /// llamamos una lista llamada enum  de una libreria UIState que se dedicara a llamar la funcion changeUIManagerState
+    /// </summary>
+    public enum UIState {
+        None,
+        ActivateNewSign,
+        DesactivateSign
+    }
     #endregion
-
 
     #region Funciones Privadas
     /// <summary>
     /// si nuestra instancia es verdaderamente algun objeto es referencia en Unity se llama esra, si no, se destruye a si misma
     /// </summary>
-    void Awake()
-    {
-        if (instance == null)
-        {
+    void Awake() {
+        if (instance == null) {
             instance = this;
-        }
-        else
-        {
+        } else {
             Destroy(instance);
         }
     }
@@ -79,8 +78,7 @@ public class UIManager : MonoBehaviour
     /// ocupando una lirberia de Gameobject se le asignara un lugar random gracias a la funcion setNewRandomPosition y se le activa
     /// empieza nuestra corrutina que activara la funcion de tiempo de espera TimeToTurnOffSign y a su vez setNewRandomPosition()
     /// </summary>
-    void activateNewSign()
-    {
+    void activateNewSign() {
         m_listOfSign[m_newPosition].SetActive(true);
         StartCoroutine(TimeToTurnOffSign(m_newPosition));
     }
@@ -88,13 +86,9 @@ public class UIManager : MonoBehaviour
     /// se llama la libreria de GameObject m_listOfSign para luego llamar la funcion de setNewRandomPosition y desactivarlo
     /// y ya no estara la advertencia
     /// </summary>
-    void desactivateNewSign()
-    {
+    void desactivateNewSign() {
         m_listOfSign[m_newPosition].SetActive(false);
     }
-
-    #endregion
-
 
     /// <summary>
     /// llamamos la libreria Enum llamado TimeToTurnOffSign con una variable tipo entero int 
@@ -104,20 +98,13 @@ public class UIManager : MonoBehaviour
     /// </summary>
     /// <param name="p_newSign"></param>
     /// <returns></returns>
-    IEnumerator TimeToTurnOffSign(int p_newSign)
-    {// cuando tengamos activatodo el activatenewsign le podemos poner que spawne los enemigos cada cierto segundos 
+    IEnumerator TimeToTurnOffSign(int p_newSign) {// cuando tengamos activatodo el activatenewsign le podemos poner que spawne los enemigos cada cierto segundos 
         yield return new WaitForSeconds(3);
         m_listOfSign[p_newSign].SetActive(false);
         changeUIManagerState(UIState.DesactivateSign);
 
     }
 }
-/// <summary>
-/// llamamos una lista llamada enum  de una libreria UIState que se dedicara a llamar la funcion changeUIManagerState
-/// </summary>
-public enum UIState
-{
-    None,
-    ActivateNewSign,
-    DesactivateSign
-}
+#endregion
+
+
