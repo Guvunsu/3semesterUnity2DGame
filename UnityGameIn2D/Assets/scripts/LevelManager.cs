@@ -7,8 +7,8 @@ public class LevelManager : MonoBehaviour
     public static LevelManager instance;
 
     LevelManagerState m_currentState;
-
-    private void Awake()
+    
+    void Awake()
     {
         if (instance == null)
         {
@@ -20,11 +20,16 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    void Start()
     {
         changeLevelManagerState(LevelManagerState.Game);
     }
-
+    /// <summary>
+    /// Hago una fucnion publica que llama una libreria de tipo Enum p_newState llamandola igualmente m_currentState, se sale 
+    /// hacemos una funcion de cambio y pasara por cada caso del estado de LevelManagerState que accedera a una lista enum
+    /// al llegar en la lista de Game , se llamara la funcion game(), al terminar y llamar GameOver se termina de ejecutar
+    /// </summary>
+    /// <param name="p_newState"></param>
     public void changeLevelManagerState(LevelManagerState p_newState)
     {
         if (p_newState == m_currentState)
@@ -46,7 +51,11 @@ public class LevelManager : MonoBehaviour
         }
 
     }
-
+    /// <summary>
+    /// llamaremos una variable de tipo entero temp_newValue que sera igual una generacion aleatoria de un rango de 3 opciones
+    /// llamaremos a un scrip UIManager donde llamara aparecera una nueva posicion random de 3 opciones
+    /// Luego de nuevo, pero ahora aaccedera a la funcin que activara la señal y desaparecera accediendo a nuestra lista de enum que llama esta
+    /// </summary>
     void game()
     {
         int temp_newValue = Random.Range(0, 2);
@@ -55,7 +64,9 @@ public class LevelManager : MonoBehaviour
         UIManager.instance.changeUIManagerState(UIState.ActivateNewSign);
     }
 }
-
+/// <summary>
+/// llamaos un enum de tipo LevelManagerState donde nombrarmeos los estados dentro del gameplay
+/// </summary>
 public enum LevelManagerState
 {
     None,
