@@ -2499,7 +2499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deb42ad8ddfc6be4dba56be79318c381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerTotal: 90
+  timerTotal: 60
   textoUGUI: {fileID: 236161411}
 --- !u!1 &2087605612
 GameObject:

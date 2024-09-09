@@ -65,7 +65,8 @@ public class UIManager : MonoBehaviour
 
     #region Funciones Privadas
     /// <summary>
-    /// si nuestra instancia es verdaderamente algun objeto es referencia en Unity se llama esra, si no, se destruye a si misma
+    /// si nuestra instancia es verdaderamente algun objeto es referencia en Unity
+    /// se llama esra, si no, se destruye a si misma
     /// </summary>
     void Awake()
     {

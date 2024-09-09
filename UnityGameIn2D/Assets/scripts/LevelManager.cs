@@ -9,19 +9,13 @@ public class LevelManager : MonoBehaviour {
     // instancia para mi nivel
     public static LevelManager instance;
     // para el tiempo
-    [SerializeField] private float timerTotal = 90;
+    [SerializeField] private float timerTotal = 60;
     [SerializeField] private TextMeshProUGUI textoUGUI;
-
-    //variables para que funcione el timer 
-    private bool timerUp = false;
 
     //variables primitivas (para el GUI)
     int minutes;
     int seconds;
     string timerString;
-    // para el panel de derrota
-    bool losePanelIsOpen = false;
-    bool isGameLose = false;
     // variable de tipo de libreria Enum 
     LevelManagerState m_currentState { get; set; }
     #endregion
@@ -36,7 +30,6 @@ public class LevelManager : MonoBehaviour {
     }
 
     void Start() {
-        losePanelIsOpen = false;
         changeLevelManagerState(LevelManagerState.CreateNewEnemy);
     }
     /// <summary>
@@ -80,7 +73,10 @@ public class LevelManager : MonoBehaviour {
         changeLevelManagerState(LevelManagerState.None);
     }
     /// <summary>
-    ///
+    ///hago 2 variables tipo entero llamado minutos y segundos y me debe regresar de manera 
+    ///flotante sobre 60 y en segundos minutos * 60
+    ///en un string darle un formato de mnutos y segundos y me debe regresar ese formato {
+    ///cuando termine
     /// </summary>
     /// <returns></returns>
     public string timeFormat() {
@@ -90,50 +86,24 @@ public class LevelManager : MonoBehaviour {
         timerString = string.Format("{0:0}:{1:00}", minutes, seconds);
         return timerString;
     }
-
+    /// <summary>
+    /// el texto vinculado a este scrip le dara la capacidad de tener acceso a la funcion 
+    /// del formato del string del tiempo 
+    /// mi floatante que es igual a 60f se le restara -1 
+    /// si mi tiempo total es menor o igual a 0 se termina el programa
+    /// </summary>
     public void timer() {
-        if (timerTotal > 0 && !timerUp) {
-            timerTotal -= Time.deltaTime;
-        } else timerUp = true;
 
         textoUGUI.text = timeFormat();
-    }
-
-    //para resetear el timer
-    public float ReturnTimer() {
-        return timerTotal;
-    }
-
-    public bool TimerUp {
-        // regresa un valor que esta afuera del script
-
-        get => timerUp;
-
-        //establece un nuevo valor en una variable
-
-        set => timerUp = value;
-    }
-    public void activateLosePanel() {
-        //esta sirve para activar la escena de muerte/derrota cuando hayas perdido
-
-        losePanelIsOpen = true;
-    }
-    public bool IsGameLose {
-        get => IsGameLose;
-        set => isGameLose = value;
-
+        timerTotal -= 1 * Time.deltaTime;
+        if (timerTotal >= 0) {
+        } else return;
 
     }
-    public void sceneSwitch(string sceneName) {
 
-        //esto me hace cambiar de UI´s 
-
-        losePanelIsOpen = true;
-        isGameLose = true;
-        SceneManager.LoadScene(sceneName);
-    }
-    #endregion
 }
+#endregion
+
 
 /// <summary>
 /// llamaos un enum de tipo LevelManagerState donde nombrarmeos los estados dentro del gameplay
